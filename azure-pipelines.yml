@@ -7,7 +7,12 @@ trigger:
 - '*'
 
 pool:
+<<<<<<< HEAD
   vm-image: ubuntu-20.04
+=======
+  #name: Default
+  vmImage: ubuntu-latest
+>>>>>>> df07f4dca6741f6e457f258e20c5715e6df6c11e
   demands:
   - npm
 
@@ -18,15 +23,26 @@ variables:
 
 steps: 
 - task: UseDotNet@2
+<<<<<<< HEAD
   displayName: Use .NET SDK $(dotnetSdkVersion)
   inputs:
     packageType: sdk
     version: $(dotnetSdkVersion)
+=======
+  displayName: Use .NET SDK 5.0
+  inputs:
+    packageType: sdk
+    version: 5.0.203
+>>>>>>> df07f4dca6741f6e457f258e20c5715e6df6c11e
 - task: Npm@1
   displayName: Run npm install
   inputs:
     verbose: false 
+<<<<<<< HEAD
 - script: ./node_modules/.bin/node-sass $(wwwrootDir) --output $(wwwrootDir)
+=======
+- script: ./node_modules/.bin/node-sass Tailspin.SpaceGame.Web/wwwroot --output Tailspin.SpaceGame.Web/wwwroot
+>>>>>>> df07f4dca6741f6e457f258e20c5715e6df6c11e
   displayName: Compile Sass assets
 - task: gulp@1
   displayName: Run gulp tasks
@@ -38,6 +54,7 @@ steps:
   inputs:
     command: restore
     projects: '**/*.csproj'
+<<<<<<< HEAD
 - template: templates/build.yml
   parameters: 
     buildConfiguration: Debug
@@ -47,3 +64,11 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
   condition: succeeded()
+=======
+- task: DotNetCoreCLI@2
+  displayName: Build the project - Release
+  inputs:
+    command: build
+    arguments: --no-restore --configuration Release
+    projects: '**/*.csproj'
+>>>>>>> df07f4dca6741f6e457f258e20c5715e6df6c11e
